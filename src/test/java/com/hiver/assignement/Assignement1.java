@@ -10,7 +10,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -38,6 +41,13 @@ public class Assignement1 implements HomePageLocators {
 		wait = new WebDriverWait(driver, DRIVER_DEFAULT_WAIT_TIMEOUT, SLEEP_IN_BETWEEN_POLLS);
 		LOG.info("Chrome Driver Instance loaded successfully.");
 
+	}
+	
+	@BeforeMethod
+	public void beforeMethod() {
+		LOG.info("++++++++++++++++++++++++++++++++++++++++++");
+		LOG.info("************   TEST CASE STARTED **********");
+		LOG.info("++++++++++++++++++++++++++++++++++++++++++");
 	}
 
 	@Test(priority = 0)
@@ -105,6 +115,24 @@ public class Assignement1 implements HomePageLocators {
 
 		Assert.assertEquals(actualTotalPayableAmount, expectedTotalPayableAmount);
 
+	}
+	
+	@AfterMethod
+	public void afterMethod(ITestResult result) {
+		LOG.info("#### TEST METHOD EXECUTED " + result.getName() + " " + result.getTestClass() + " ####");
+		if (result.getStatus() == ITestResult.SUCCESS) {
+			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			LOG.info("************   TEST CASE PASSED **********");
+			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		} else if (result.getStatus() == ITestResult.FAILURE) {
+			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			LOG.info("************   TEST CASE FAILED **********");
+			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		} else if (result.getStatus() == ITestResult.SKIP) {
+			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			LOG.info("************   TEST CASE SKIPPED **********");
+			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		}
 	}
 
 	@AfterTest
